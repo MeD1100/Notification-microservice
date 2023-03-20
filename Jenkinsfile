@@ -10,5 +10,14 @@ pipeline{
                 git branch: 'main', url: 'https://github.com/MeD1100/Notification-microservice.git'
             }
         }
+
+        stage('Build du projet') {
+		 agent { docker 'maven:3.8.3-openjdk-17' }
+
+            steps {
+                sh 'mvn install -DskipTests '
+				stash includes: 'notification-service/target/*.jar', name: 'targetfiles'
+            }
+        }
     }
 }
