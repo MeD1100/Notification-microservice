@@ -12,11 +12,16 @@ pipeline{
         }
 
         stage('Build du projet') {
-		 agent { docker 'maven:3.8.3-openjdk-17' }
+            agent { 
+                docker 'maven:3.8.3-openjdk-17' 
+            }
 
             steps {
-                sh 'mvn install -DskipTests '
-				stash includes: 'notification-service/target/*.jar', name: 'targetfiles'
+                withMaven(maven:'3.8.3') {
+                    sh 'mvn install -DskipTests '
+                }
+                
+				stash includes: 'target/*.jar', name: 'targetfiles'
             }
         }
     }
