@@ -2,6 +2,10 @@ pipeline{
 
     agent any
 
+    environment{
+        DOCKERHUB_CREDENTIALS = credentials('med-dockerhub')
+    }
+
     stages{
 
         // stage('Git Checkout'){
@@ -29,13 +33,20 @@ pipeline{
             steps {
                  unstash 'targetfiles'
 			   script {
-                        sh 'docker build ./notification-service -t notification-service1:latest'
-						sh 'docker tag notification-service1 medrh/notification-service1'
-						sh 'docker push medrh/notification-service1'
+                        sh 'docker build ./notification-service -t notification-service-via-jenkins:latest'
+                        sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+						sh 'docker tag notification-service-via-jenkins medrh/notification-service-via-jenkins'
+						sh 'docker push medrh/notification-service-via-jenkins'
                 }
             }
         }
 
 
+    }
+    
+    post{
+        always{
+            sh 'docker logout'
+        }
     }
 }
