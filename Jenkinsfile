@@ -24,5 +24,18 @@ pipeline{
 				stash includes: 'notification-service/target/*.jar', name: 'targetfiles'
             }
         }
+
+        stage('Construction image') {
+            steps {
+                 unstash 'targetfiles'
+			   script {
+                        sh 'docker build ./notification-service -t notification-service:latest'
+						sh 'docker tag notification-service medrh/notification-service'
+						sh 'docker push medrh/notification-service'
+                }
+            }
+        }
+
+
     }
 }
