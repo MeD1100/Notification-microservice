@@ -11,19 +11,19 @@ pipeline{
         //     }
         // }
 
-        // stage('Build du projet') {
-        //     agent { 
-        //         docker 'maven:3.8.3-openjdk-17' 
-        //     }
+        stage('Build du projet') {
+            agent { 
+                docker 'maven:3.8.3-openjdk-17' 
+            }
 
-        //     steps {
-        //         withMaven(maven:'3.8.3') {
-        //             sh 'mvn install -DskipTests '
-        //         }
+            steps {
+                // withMaven(maven:'3.8.3') {
+                //     sh 'mvn install -DskipTests '
+                // }
                 
-		// 		stash includes: 'notification-service/target/*.jar', name: 'targetfiles'
-        //     }
-        // }
+				stash includes: 'notification-service/target/*.jar', name: 'targetfiles'
+            }
+        }
 
         stage('Construction image') {
             steps {
