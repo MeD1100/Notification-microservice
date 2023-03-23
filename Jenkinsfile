@@ -21,7 +21,7 @@ pipeline{
                     sh 'mvn install -DskipTests '
                 }
                 
-				stash includes: 'target/*.jar', name: 'targetfiles'
+				stash includes: 'notification-service/target/*.jar', name: 'targetfiles'
             }
         }
     }
