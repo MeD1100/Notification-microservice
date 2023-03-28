@@ -58,7 +58,7 @@ pipeline{
                         [
                             artifactId: 'notification-service',
                             classifier: '',
-                            file: 'target/notification-service-1.0-SNAPSHOT.jar',
+                            file: 'notification-service/target/notification-service-1.0-SNAPSHOT.jar',
                             type: 'jar'
                         ]
                     ],
