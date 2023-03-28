@@ -50,6 +50,28 @@ pipeline{
     //             }
     //   }
 
+            stage('Uploading jar files to Nexus'){
+                steps{
+
+                    nexusArtifactUploader artifacts:
+                    [
+                        [
+                            artifactId: 'notification-service',
+                            classifier: '',
+                            file: 'target/notification-service-1.0-SNAPSHOT.jar',
+                            type: 'jar'
+                        ]
+                    ],
+                    credentialsId: 'nexus-auth',
+                    groupId: 'com.programming.techie',
+                    nexusUrl: 'localhost:8110',
+                    nexusVersion: 'nexus3',
+                    protocol: 'http',
+                    repository: 'sofia-app-release',
+                    version: '1.0-SNAPSHOT'
+                }
+            }
+
 
     }
 
